@@ -1,124 +1,230 @@
-import React from "react";
-import { Facebook, Linkedin, Instagram } from "lucide-react";
+import React, { useState } from "react";
+import {
+  ChevronRight,
+  ChevronDown,
+  Facebook,
+  Linkedin,
+  Instagram,
+  Twitter,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
-  const offices = [
+  const [openSection, setOpenSection] = useState(null);
+  const navigate = useNavigate();
+
+  const navLinks = [
+    { name: "Home", path: "/", dropdown: false },
+    { name: "About Us", path: "/about", dropdown: false },
     {
-      country: "Pakistan",
-      type: "Global Delivery Center",
-      flag: "🇵🇰",
-      address:
-        "Plot B, 281 Ghazi Rd, Khuda Buksh Colony KB Society, Lahore, Punjab",
+      name: "Services",
+      dropdown: true,
+      items: [
+        { label: "Web Dev", path: "/services/web-development" },
+        { label: "App Dev", path: "/services/app-development" },
+        { label: "Cloud", path: "/services/cloud" },
+      ],
     },
-    {
-      country: "USA",
-      type: "Regional Office",
-      flag: "🇺🇸",
-      address: "18 S 2nd Street #120 San Jose, CA, 95113, United States",
-    },
-    {
-      country: "UAE",
-      type: "Regional Office",
-      flag: "🇦🇪",
-      address:
-        "Concord Tower, Dubai Internet City, 9th floor, Black Sea Business Center",
-    },
-    {
-      country: "UK",
-      type: "Regional Office",
-      flag: "🇬🇧",
-      address: "128 City Road London EC1V 2NX, United Kingdom",
-    },
-    {
-      country: "KSA",
-      type: "Regional Office",
-      flag: "🇸🇦",
-      address: "3141 Anas Ibn Malik Rd, Al Malqa, Riyadh 13521 KSA",
-    },
+    { name: "Careers", path: "/careers", dropdown: false },
   ];
 
   return (
-    <footer className="bg-black text-white p-8 md:p-16 font-sans relative">
-      {/* Floating "Let's Talk Business" Tab */}
-      <div className="absolute right-0 top-1/2 -translate-y-1/2 hidden lg:block">
-        <div className="bg-[#00d1b2] text-black px-4 py-8 rounded-l-2xl font-bold [writing-mode:vertical-lr] rotate-180 cursor-pointer hover:bg-white transition-colors">
-          Let's Talk Business
-        </div>
-      </div>
+    <footer className="bg-black text-white p-10 md:px-10 md:py-10 lg:px-20 font-sans relative overflow-hidden">
+      {/* Background Gradient Glow */}
+      <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-cyan-900/10 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto">
-        {/* Top Navigation Row */}
-        <div className="flex flex-wrap gap-8 justify-between mb-16 border-b border-gray-800 pb-8">
-          <div className="w-10 h-10 bg-[#00d1b2] rounded-full flex items-center justify-center">
-            {/* Logo Placeholder */}
-            <div className="w-6 h-6 bg-black rounded-bl-full"></div>
+        {/* ROW 1 */}
+        <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-8">
+          {/* Logo */}
+          <div className="flex justify-center md:justify-start w-full md:w-auto min-w-[120px] md:min-w-[55px] lg:min-width-[100px]">
+            <img
+              src="/images/logo.png"
+              alt="Logo"
+              className="h-28 lg:h-[100px] w-auto object-contain"
+            />
           </div>
 
-          <nav className="flex gap-12 text-sm font-medium">
-            {[
-              "Company",
-              "Industries We Serve",
-              "Services and Solutions",
-              "Resources",
-            ].map((item) => (
-              <div
-                key={item}
-                className="flex items-center gap-2 cursor-pointer hover:text-[#00d1b2]"
-              >
-                {item} <span className="text-[10px]">▼</span>
-              </div>
-            ))}
+          {/* Nav */}
+          <nav className="flex flex-col md:flex-row gap-6 md:gap-10 items-center w-full md:w-auto">
+            <div className="flex flex-row justify-center gap-5 sm:gap-6 md:gap-10 items-center flex-nowrap">
+              {navLinks.map((link) => (
+                <div key={link.name} className="relative group">
+                  <button
+                    className="flex items-center gap-1 text-[11px] sm:text-sm font-semibold hover:text-cyan-400 transition-colors uppercase tracking-wider whitespace-nowrap"
+                    onClick={() => {
+                      if (link.dropdown) {
+                        setOpenSection(
+                          openSection === link.name ? null : link.name
+                        );
+                      } else {
+                        navigate(link.path);
+                      }
+                    }}
+                  >
+                    {link.name}
+                    {link.dropdown && (
+                      <ChevronDown
+                        size={14}
+                        className={`transition-transform duration-300 ease-out ${
+                          openSection === link.name ? "rotate-180" : "rotate-0"
+                        }`}
+                      />
+                    )}
+                  </button>
+
+                  {/* Dropdown */}
+                  {link.dropdown && (
+                    <div
+                      className={`absolute top-full left-1/2 -translate-x-1/2 md:left-0 md:translate-x-0 mt-4 bg-white text-black py-4 px-6 rounded-lg shadow-2xl z-50 min-w-[160px]
+                      transition-all duration-300 ease-out origin-top
+                      ${
+                        openSection === link.name
+                          ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
+                          : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                      }`}
+                    >
+                      {link.items.map((item) => (
+                        <div
+                          key={item.label}
+                          onClick={() => {
+                            navigate(item.path);
+                            setOpenSection(null);
+                          }}
+                          className="py-2 hover:text-cyan-600 cursor-pointer text-sm font-medium"
+                        >
+                          {item.label}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Button */}
+            <button
+              onClick={() => navigate("/contact")}
+              className="bg-brand-blue hover:bg-brand-blue-dark text-white 
+              px-5 py-2.5 rounded-full text-sm font-bold uppercase tracking-wide
+              flex items-center gap-2 transition duration-300 group whitespace-nowrap"
+            >
+              Talk to our team
+              <ChevronRight
+                size={14}
+                className="transition-transform duration-300 group-hover:translate-x-1"
+              />
+            </button>
           </nav>
         </div>
 
-        {/* Office Locations Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 gap-x-16 mb-16">
-          {offices.map((office, index) => (
-            <div key={index} className="max-w-xs">
-              <div className="flex items-center gap-2 mb-3">
-                <h3 className="text-lg font-bold">
-                  {office.country}{" "}
-                  <span className="text-gray-400 font-normal text-sm">
-                    ({office.type})
-                  </span>
-                </h3>
-                <span className="text-xl">{office.flag}</span>
-              </div>
-              <p className="text-gray-400 text-sm leading-relaxed">
-                {office.address}
+        {/* ROW 2 */}
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-start text-center md:text-left gap-y-12 md:gap-x-24 lg:gap-x-32">
+          {/* Column 1 */}
+          <div className="space-y-10 md:w-1/3">
+            <div>
+              <p className="font-bold text-sm mb-2">
+                Pakistan{" "}
+                <span className="text-gray-500 font-normal">
+                  (Global Delivery Center) PK
+                </span>
+              </p>
+              <p className="text-white text-sm leading-relaxed max-w-[280px] mx-auto md:mx-0">
+                Plot B, 281 Ghazi Rd, Khuda Buksh Colony KB Society, Lahore,
+                Punjab
               </p>
             </div>
-          ))}
-        </div>
-
-        {/* Email Section */}
-        <div className="mb-16">
-          <a
-            href="mailto:global.business@devsinc.com"
-            className="text-xl md:text-2xl font-bold hover:text-[#00d1b2] transition-colors"
-          >
-            global.business@devsinc.com
-          </a>
-        </div>
-
-        {/* Bottom Bar */}
-        <div className="flex flex-col md:row justify-between items-center pt-8 border-t border-gray-800 gap-6">
-          <div className="flex gap-8 text-sm text-gray-400">
-            <a href="#" className="hover:underline">
-              Terms and Conditions
-            </a>
-            <a href="#" className="hover:underline">
-              Privacy Policy
-            </a>
+            <div>
+              <p className="font-bold text-sm mb-2">
+                UK{" "}
+                <span className="text-gray-500 font-normal">
+                  (Regional Office) GB
+                </span>
+              </p>
+              <p className="text-white text-sm leading-relaxed max-w-[280px] mx-auto md:mx-0">
+                128 City Road London EC1V 2NX, United Kingdom
+              </p>
+            </div>
           </div>
 
-          <div className="flex gap-6 items-center">
-            <Facebook className="w-6 h-6 cursor-pointer hover:text-[#00d1b2]" />
-            <Linkedin className="w-6 h-6 cursor-pointer hover:text-[#00d1b2]" />
-            <Instagram className="w-6 h-6 cursor-pointer hover:text-[#00d1b2]" />
-            <span className="text-2xl font-bold cursor-pointer hover:text-[#00d1b2]">
-              𝕏
-            </span>
+          {/* Column 2 */}
+          <div className="space-y-10 md:w-1/3 md:flex md:flex-col md:items-center">
+            <div className="md:w-fit">
+              <div>
+                <p className="font-bold text-sm mb-2">
+                  USA{" "}
+                  <span className="text-gray-500 font-normal">
+                    (Regional Office) US
+                  </span>
+                </p>
+                <p className="text-white text-sm leading-relaxed max-w-[280px] mx-auto md:mx-0">
+                  12000 Market Street #120 Reston, VA, 95113, United States
+                </p>
+              </div>
+              <div className="mt-10">
+                <p className="font-bold text-sm mb-2">
+                  KSA{" "}
+                  <span className="text-gray-500 font-normal">
+                    (Regional Office) SA
+                  </span>
+                </p>
+                <p className="text-white text-sm leading-relaxed max-w-[280px] mx-auto md:mx-0">
+                  3141 Anas Ibn Malik Rd, Al Malqa, Riyadh 13521 KSA
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Column 3 */}
+          <div className="md:w-1/3 md:flex md:justify-end">
+            <div className="md:max-w-[280px]">
+              <p className="font-bold text-sm mb-2">
+                UAE{" "}
+                <span className="text-gray-500 font-normal">
+                  (Regional Office) AE
+                </span>
+              </p>
+              <p className="text-white text-sm leading-relaxed mx-auto md:mx-0">
+                Concord Tower, Dubai Internet City, 9th floor, Black Sea
+                Business Center
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom */}
+        <div className="mt-24 pt-10 border-t border-gray-900 flex flex-col md:flex-row justify-between items-center text-center md:text-left gap-8">
+          <div className="space-y-4">
+            <h3 className="text-xl font-bold tracking-tight">
+              global.business@devsinc.com
+            </h3>
+            <div className="flex justify-center md:justify-start gap-6 text-xs text-gray-500 font-medium">
+              <a href="#" className="hover:text-brand-blue uppercase">
+                Terms and Conditions
+              </a>
+              <a href="#" className="hover:text-brand-blue uppercase">
+                Privacy Policy
+              </a>
+            </div>
+          </div>
+
+          <div className="flex justify-center gap-5 text-white">
+            <Facebook
+              size={20}
+              className="hover:text-brand-blue cursor-pointer"
+            />
+            <Linkedin
+              size={20}
+              className="hover:text-brand-blue cursor-pointer"
+            />
+            <Instagram
+              size={20}
+              className="hover:text-brand-blue cursor-pointer"
+            />
+            <Twitter
+              size={20}
+              className="hover:text-brand-blue cursor-pointer"
+            />
           </div>
         </div>
       </div>

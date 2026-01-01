@@ -35,8 +35,8 @@ function App() {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/about" element={<About />} />
       </Routes>
-      <WorkTogetherSection />
-      <Footer />
+      {/* <WorkTogetherSection /> */}
+      {/* <Footer /> */}
       <TestFooter />
     </Router>
   );
