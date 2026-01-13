@@ -1,44 +1,47 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import ScrollToTop from "./Component/ScrollToTop";
-import AboutUsSection from "./Component/AboutUs";
-import Hero from "./Component/Hero";
 import Navbar from "./Component/NavBar";
+import Hero from "./Component/Hero";
+import AboutUsSection from "./Component/AboutUs";
 import ServicesSection from "./Component/OurServices";
 import ClientsSection from "./Component/Clients";
 import SupportForm from "./Component/Form";
-import WorkTogetherSection from "./Component/Work";
-import Footer from "./Component/Footer";
+// import SupportForm from "../frontend/SupportForm";
 import TestFooter from "./Component/TestFooter";
 import ContactUs from "./Pages/ContactUs";
 import About from "./Pages/About";
+import Container from "../src/Component/Container";
+import Services from "./Pages/Services";
 
 function App() {
   return (
-    <Router>
+    <>
+      <Container className="mt-4">
+        <Navbar />
+      </Container>
       <ScrollToTop />
-      <Navbar />
       <Routes>
         <Route
           path="/"
           element={
             <>
               <Hero />
-              {/* <LogoStrip /> */}
-              <AboutUsSection />
-              <ServicesSection />
-              <ClientsSection />
-              <SupportForm />
+              <Container>
+                <AboutUsSection />
+                <ServicesSection />
+                <ClientsSection />
+                <SupportForm />
+              </Container>
             </>
           }
         />
-        <Route path="/contact" element={<ContactUs />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/services" element={<Services />} />
       </Routes>
-      {/* <WorkTogetherSection /> */}
-      {/* <Footer /> */}
       <TestFooter />
-    </Router>
+    </>
   );
 }
 

@@ -1,14 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
-import CounterSection from "./Counter";
 import Test from "./Test";
-import Transcend from "./Transcend";
 
 export default function ServicesSection() {
   const navigate = useNavigate();
   return (
-    <section className="py-12 md:py-24 px-4 md:px-6 lg:px-24">
+    <section className="pt-12 sm:pt-16 lg:pt-12 pb-12 sm:pb-12 lg:pb-22">
       <div className="max-w-6xl mx-auto">
         {/* Top heading + button row */}
         <div className="flex flex-col md:flex-row items-start justify-between mb-8">
@@ -44,8 +42,11 @@ export default function ServicesSection() {
           </div>
         </div>
       </div>
-      <Test />
-      {/* <Transcend /> */}
+
+      <div className="mt-12 sm:mt-16 lg:mt-8">
+        <Test />
+      </div>
+
       <div className="mt-8 md:mt-0">{/* <CounterSection /> */}</div>
     </section>
   );

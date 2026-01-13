@@ -26,7 +26,6 @@ const ServiceCard = ({ service, isFirst }) => {
   return (
     <div
       ref={domRef}
-      /* Added 'flex flex-col items-center lg:items-start' to center content on mobile */
       className={`transition-all duration-1000 transform flex flex-col items-center lg:items-start ${
         isFirst ? "border-t-0 pt-0" : "border-t border-gray-100 pt-12"
       } ${
@@ -52,7 +51,7 @@ const ServiceCard = ({ service, isFirst }) => {
   );
 };
 
-const ServicesSection = () => {
+const Test = () => {
   const words = ["Possibilities", "Perspectives", "Innovations", "Solutions"];
   const [index, setIndex] = useState(0);
 
@@ -97,10 +96,9 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section className="py-24 px-6 md:px-16 lg:px-0 text-slate-900 relative">
+    <section className="py-8 sm:py-8 lg:py-12 px-6 md:px-16 lg:px-0 text-slate-900 relative">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center lg:items-start">
         {/* Left Side: STICKY Content */}
-        {/* Added 'flex flex-col items-center lg:items-start' */}
         <div className="lg:sticky lg:top-24 space-y-4 self-center lg:self-start flex flex-col items-center lg:items-start">
           <h1 className="text-5xl md:text-8xl lg:text-7xl font-bold tracking-tighter leading-[1.1] text-slate-900 text-center lg:text-left">
             Rede
@@ -130,20 +128,20 @@ const ServicesSection = () => {
       <style
         dangerouslySetInnerHTML={{
           __html: `
-        @keyframes textSlide {
-          0% { opacity: 0; transform: translateY(20px); }
-          15% { opacity: 1; transform: translateY(0); }
-          85% { opacity: 1; transform: translateY(0); }
-          100% { opacity: 0; transform: translateY(-20px); }
-        }
-        .animate-text-slide {
-          animation: textSlide 3s ease-in-out infinite;
-        }
-      `,
+          @keyframes textSlide {
+            0% { opacity: 0; transform: translateY(20px); }
+            15% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+          }
+          .animate-text-slide {
+            animation: textSlide 3s ease-in-out infinite;
+          }
+        `,
         }}
       />
     </section>
   );
 };
 
-export default ServicesSection;
+export default Test;

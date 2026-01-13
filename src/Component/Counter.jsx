@@ -3,28 +3,28 @@ import React, { useEffect, useState, useRef } from "react";
 // Define the data for the counter section
 const counters = [
   {
-    value: "382+",
+    value: "18+",
     labelBold: "Digital Solutions Delivered",
     labelNormal: "and counting more.",
     shape: "circle",
     shapeClass: "fill-brand-blue",
-    number: 382,
+    number: 18,
   },
   {
-    value: "14+",
+    value: "5+",
     labelBold: "Industries Served",
     labelNormal: " (Logistics, Fintech, Retail)",
     shape: "diamond",
     shapeClass: "fill-brand-blue",
-    number: 14,
+    number: 5,
   },
   {
-    value: "98+",
+    value: "8+",
     labelBold: "Satisfied Clients",
     labelNormal: "and counting more.",
     shape: "triangle",
     shapeClass: "fill-brand-blue",
-    number: 98,
+    number: 8,
   },
 ];
 
@@ -151,7 +151,7 @@ const CounterShape = ({
 // Main CounterSection
 const CounterSection = () => {
   return (
-    <section className="font-sans pt-20">
+    <section className="font-sans pt-4">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center gap-12 md:gap-6 lg:gap-12 md:pl-20">
           {counters.map((counter, index) => (

@@ -1,19 +1,19 @@
 import React from "react";
-import aboutUsBgImage from "/images/AboutUs.png";
+import aboutUsBgImage from "../assets/AboutUs.png";
 import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const AboutUsSection = () => {
   const navigate = useNavigate();
   return (
-    <section className="py-20 flex justify-center items-center">
-      <div className="relative max-w-6xl w-4/5">
+    <section className="w-full flex justify-center pt-8 sm:pt-2 lg:pt-8 pb-12 sm:pb-12 lg:pb-12">
+      <div className="relative w-full">
         {/* Background Image Card */}
         <div
           className="
             shadow-xl
             h-[500px]
-            md:h-[600px] /* Reduced from 700px to keep it contained */
+            md:h-[600px]
             lg:h-[500px]
             rounded-lg
             rounded-tr-[80px]
@@ -29,14 +29,14 @@ const AboutUsSection = () => {
         >
           {/* Frosted Card */}
           <div
-            className="absolute z-40 w-[60%] sm:w-[70%] md:w-[65%] lg:w-[57%] top-[65%] lg:top-[55%] md:top-[55%] xl:top-[65%] -translate-y-1/2"
+            className="absolute z-40 w-[22rem] top-[25rem] md:w-[30rem] md:top-[30rem] lg:w-[29rem] lg:top-[23rem] xl:w-[36rem] xl:top-[27rem] -translate-y-1/2"
             style={{
               right: "0",
-              minHeight: "450px", // Reduced min-height for better fit on tablets
+              minHeight: "450px",
             }}
           >
             <div
-              className="rounded-[80px] p-8 md:p-14 relative overflow-hidden hidden sm:block"
+              className="rounded-tl-[80px] rounded-bl-[80px] p-8 md:p-14 relative overflow-hidden hidden sm:block"
               style={{
                 border: "1px solid rgba(255,255,255,0.08)",
                 backdropFilter: "blur(14px)",
@@ -75,11 +75,16 @@ const AboutUsSection = () => {
             </div>
           </div>
 
-          {/* Vertical ABOUT US Label */}
-          <div className="absolute bottom-24 left-[-50px] z-50 ">
-            <p className="text-xl font-semibold text-[#382f68] uppercase tracking-widest flex items-center whitespace-nowrap -rotate-90 origin-bottom-left">
-              <span className="text-[#382f68] mr-4 text-3xl">&larr;</span> ABOUT
-              US
+          {/* Vertical ABOUT US Label - Clickable and Hidden on Mobile */}
+          <div
+            onClick={() => navigate("/about")}
+            className="absolute bottom-24 left-[-50px] z-50 sm:pl-12 sm:pb-10 hidden sm:block cursor-pointer group"
+          >
+            <p className="text-xl font-semibold text-[#382f68] uppercase tracking-widest flex items-center whitespace-nowrap -rotate-90 origin-bottom-left transition-colors hover:text-brand-blue">
+              <span className="text-[#382f68] mr-4 text-3xl group-hover:text-brand-blue">
+                &larr;
+              </span>{" "}
+              ABOUT US
             </p>
           </div>
         </div>
@@ -101,7 +106,7 @@ const AboutUsSection = () => {
         </div>
 
         {/* Button below card */}
-        <div className="mt-24 flex justify-center sm:justify-start">
+        <div className="mt-[2rem] md:mt-[5rem] lg:mt-[2rem] flex justify-center sm:justify-start">
           <button
             onClick={() => navigate("/about")}
             className="bg-brand-blue hover:bg-brand-blue-dark text-white font-semibold 

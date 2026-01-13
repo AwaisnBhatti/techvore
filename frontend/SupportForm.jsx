@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { ChevronRight } from "lucide-react";
-import faqArrow from "../assets/faqArrow.png";
+import faqArrow from "../src/assets/faqArrow.png";
 
 export default function SupportForm() {
   const [openIndex, setOpenIndex] = useState(0);
+  const [subject, setSubject] = useState("");
+  const [description, setDescription] = useState("");
 
   const faqs = [
     {
@@ -42,58 +44,76 @@ export default function SupportForm() {
     setOpenIndex(openIndex === index ? null : index);
   };
 
-  return (
-    <div className="py-20 flex flex-col lg:flex-row gap-14">
-      {/* Left Form */}
-      <div className="bg-black text-white px-8 lg:p-8 xl:p-10 py-8 w-full lg:w-[300px] h-auto lg:h-[530px] xl:h-[550px] xl:w-[320px] flex flex-col">
-        {/* Header Section */}
-        <div>
-          <h2 className="text-2xl font-semibold">Don't find your answer!</h2>
-          <p className="mt-2 text-sm opacity-80">
-            Don’t worry, write your question here and our support team will help
-            you.
-          </p>
-        </div>
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        {/* Form Section */}
-        <form className="flex flex-col justify-between flex-1 mt-6">
-          <div className="space-y-6 overflow-y-auto pr-2">
-            {/* SUBJECT FIELD */}
-            <div className="relative mt-4">
-              <label className="absolute -top-3 left-4 bg-black px-2 text-sm text-white">
+    try {
+      const res = await fetch("http://localhost:5000/api/support", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ subject, description }),
+      });
+
+      if (res.ok) {
+        alert("✅ Your question has been submitted!");
+        setSubject("");
+        setDescription("");
+      } else {
+        alert("❌ Submission failed");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("❌ Server not responding");
+    }
+  };
+
+  return (
+    <div className="py-20 px-6 lg:px-24 flex flex-col lg:flex-row gap-14">
+      {/* Left Form */}
+      <div className="bg-black text-white px-8 py-8 w-full lg:w-[300px] flex flex-col">
+        <h2 className="text-2xl font-semibold">Don't find your answer!</h2>
+        <p className="mt-2 text-sm opacity-80">
+          Write your question and our support team will help you.
+        </p>
+
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 mt-6">
+          <div className="space-y-6">
+            <div className="relative">
+              <label className="absolute -top-3 left-4 bg-black px-2 text-sm">
                 Subject
               </label>
               <input
                 type="text"
-                className="w-full p-3 bg-transparent border border-white text-white outline-none"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                className="w-full p-3 bg-transparent border border-white outline-none"
+                required
               />
             </div>
 
-            {/* DESCRIPTION FIELD */}
-            <div className="relative mt-6">
-              <label className="absolute -top-3 left-2 bg-black px-2 text-sm text-white">
+            <div className="relative">
+              <label className="absolute -top-3 left-4 bg-black px-2 text-sm">
                 Describe your Project
               </label>
               <textarea
                 rows="5"
-                className="w-full p-3 bg-transparent border border-white text-white outline-none resize-none overflow-y-auto"
-              ></textarea>
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full p-3 bg-transparent border border-white outline-none resize-none"
+                required
+              />
             </div>
           </div>
 
-          {/* Button */}
-          <div className="flex justify-center mt-6">
-            <button
-              type="submit"
-              className="bg-brand-blue hover:bg-brand-blue-dark transition px-6 py-3 rounded-full text-white flex items-center gap-2 group"
-            >
-              Submit Question
-              <ChevronRight
-                size={16}
-                className="ml-1 mt-1 transition-transform duration-300 group-hover:translate-x-2"
-              />
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="mt-6 bg-brand-blue px-6 py-3 rounded-full flex items-center justify-center gap-2"
+          >
+            Submit Question
+            <ChevronRight size={16} />
+          </button>
         </form>
       </div>
 
@@ -103,13 +123,13 @@ export default function SupportForm() {
           <div
             key={index}
             className={`
-              overflow-hidden border border-black transition-all duration-500
-              ${
-                openIndex === index
-                  ? "rounded-t-2xl bg-transparent p-0"
-                  : "rounded-none bg-black text-white p-0"
-              }
-            `}
+                    overflow-hidden border border-black transition-all duration-500
+                    ${
+                      openIndex === index
+                        ? "rounded-t-2xl bg-transparent p-0"
+                        : "rounded-none bg-black text-white p-0"
+                    }
+                  `}
           >
             {/* Question button */}
             <button
@@ -118,13 +138,13 @@ export default function SupportForm() {
             >
               <span
                 className={`
-                  font-semibold text-lg
-                  ${
-                    openIndex !== index
-                      ? "hover:text-blue-300 transition-colors duration-200"
-                      : "text-white"
-                  }
-                `}
+                        font-semibold text-lg
+                        ${
+                          openIndex !== index
+                            ? "hover:text-blue-300 transition-colors duration-200"
+                            : "text-white"
+                        }
+                      `}
               >
                 {faq.question}
               </span>
@@ -132,18 +152,18 @@ export default function SupportForm() {
                 src={faqArrow}
                 alt="Arrow"
                 className={`
-                  w-8 h-8 ml-2 transition-transform duration-300
-                  ${openIndex === index ? "rotate-180" : ""}
-                `}
+                        w-8 h-8 ml-2 transition-transform duration-300
+                        ${openIndex === index ? "rotate-180" : ""}
+                      `}
               />
             </button>
 
             {/* Answer */}
             <div
               className={`
-                overflow-hidden transition-all duration-500
-                ${openIndex === index ? "max-h-96 p-6" : "max-h-0 p-0"}
-              `}
+                      overflow-hidden transition-all duration-500
+                      ${openIndex === index ? "max-h-96 p-6" : "max-h-0 p-0"}
+                    `}
             >
               <div className="text-black bg-transparent whitespace-pre-line">
                 {faq.answer}
