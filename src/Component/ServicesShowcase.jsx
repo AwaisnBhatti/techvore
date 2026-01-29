@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom"; // Essential for SPA navigation
 
 const ServiceCard = ({ service, isFirst }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -15,12 +16,14 @@ const ServiceCard = ({ service, isFirst }) => {
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
 
     const { current } = domRef;
-    observer.observe(current);
-    return () => observer.unobserve(current);
+    if (current) observer.observe(current);
+    return () => {
+      if (current) observer.unobserve(current);
+    };
   }, []);
 
   return (
@@ -38,20 +41,22 @@ const ServiceCard = ({ service, isFirst }) => {
       <p className="text-slate-500 text-xl leading-relaxed mb-6 max-w-md text-center lg:text-left">
         {service.description}
       </p>
-      <a
-        href={service.link}
+
+      {/* Changed from <a> to <Link> for smooth React navigation */}
+      <Link
+        to={service.link}
         className="group text-[#0091ffff] font-bold text-sm tracking-widest flex items-center gap-2 hover:text-[#00affe] transition-colors uppercase"
       >
         Learn more
         <span className="group-hover:translate-x-1 transition-transform duration-300">
           →
         </span>
-      </a>
+      </Link>
     </div>
   );
 };
 
-const Test = () => {
+const ServicesShowcase = () => {
   const words = ["Possibilities", "Perspectives", "Innovations", "Solutions"];
   const [index, setIndex] = useState(0);
 
@@ -62,36 +67,37 @@ const Test = () => {
     return () => clearInterval(timer);
   }, [words.length]);
 
+  // Links updated from "#" to "/services"
   const services = [
     {
       title: "Digital Product Engineering",
       description:
         "We turn ideas into scalable, secure digital products that lead the market and retain users.",
-      link: "#",
+      link: "/services",
     },
     {
       title: "Data Intelligence & Architecture",
       description:
         "Data becomes powerful when it delivers answers. We build smart databases and analytics systems.",
-      link: "#",
+      link: "/services",
     },
     {
       title: "Autonomous Business Operations",
       description:
         "Efficiency is your real edge. With Python powered automation, we streamline your workflows.",
-      link: "#",
+      link: "/services",
     },
     {
       title: "Blockchain Architecture & Web3",
       description:
         "We build the backbone of next gen global exchange using Web3 and Blockchain.",
-      link: "#",
+      link: "/services",
     },
     {
       title: "Integrated Mobility & Supply Chain",
       description:
         "We merge software precision with fleet operations, using data-driven dispatching.",
-      link: "#",
+      link: "/trucking",
     },
   ];
 
@@ -118,7 +124,7 @@ const Test = () => {
         </div>
 
         {/* Right Side: Animated scrolling list */}
-        <div className="lg:pl-12 space-y-24">
+        <div className="lg:pl-12 space-y-10">
           {services.map((service, idx) => (
             <ServiceCard key={idx} service={service} isFirst={idx === 0} />
           ))}
@@ -144,4 +150,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default ServicesShowcase;

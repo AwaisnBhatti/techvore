@@ -42,7 +42,7 @@ const useCountOnView = (endValue, duration = 1200) => {
           observer.disconnect();
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.5 },
     );
 
     if (ref.current) observer.observe(ref.current);
@@ -113,7 +113,7 @@ const CounterShape = ({
   return (
     <div
       ref={ref}
-      className="flex flex-col items-center text-center p-4 pb-20 w-full sm:w-1/2 md:w-1/3 lg:w-1/3"
+      className="flex flex-col items-center text-center w-full sm:w-1/2 md:w-1/3 lg:w-1/3"
     >
       <div
         className={`relative flex items-center justify-center ${containerHeightClass} mb-4`}
@@ -122,10 +122,10 @@ const CounterShape = ({
           className="absolute z-10 opacity-90"
           style={{
             transform: "translate(0px, 0px)",
-            ...(shape === "circle" && { transform: "translate(-115px, 55px)" }),
+            ...(shape === "circle" && { transform: "translate(-80px, 60px)" }),
             ...(shape === "diamond" && { transform: "translate(-55px,55px)" }),
             ...(shape === "triangle" && {
-              transform: "translate(-40px, 40px)",
+              transform: "translate(-20px, 70px)",
             }),
           }}
         >
@@ -151,8 +151,8 @@ const CounterShape = ({
 // Main CounterSection
 const CounterSection = () => {
   return (
-    <section className="font-sans pt-4">
-      <div className="max-w-7xl mx-auto">
+    <section>
+      <div className="max-w-7xl mx-auto mb-20">
         <div className="flex flex-col md:flex-row justify-between items-center gap-12 md:gap-6 lg:gap-12 md:pl-20">
           {counters.map((counter, index) => (
             <CounterShape key={index} {...counter} />

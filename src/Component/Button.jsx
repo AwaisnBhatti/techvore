@@ -1,7 +1,7 @@
 import React from "react";
 import { ChevronRight } from "lucide-react";
 
-const BrandButton = ({ text, onClick, className = "" }) => {
+const Button = ({ text, onClick, className = "" }) => {
   return (
     <button
       onClick={onClick}
@@ -16,4 +16,4 @@ const BrandButton = ({ text, onClick, className = "" }) => {
   );
 };
 
-export default BrandButton;
+export default Button;

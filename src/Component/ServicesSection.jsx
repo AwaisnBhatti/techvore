@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
-import Test from "./Test";
+import ServicesShowcase from "./ServicesShowcase";
 
 export default function ServicesSection() {
   const navigate = useNavigate();
@@ -44,10 +44,8 @@ export default function ServicesSection() {
       </div>
 
       <div className="mt-12 sm:mt-16 lg:mt-8">
-        <Test />
+        <ServicesShowcase />
       </div>
-
-      <div className="mt-8 md:mt-0">{/* <CounterSection /> */}</div>
     </section>
   );
 }

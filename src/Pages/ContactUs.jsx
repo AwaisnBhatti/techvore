@@ -32,8 +32,8 @@ export default function ContactInfo() {
                 <h2 className="text-xl sm:text-2xl font-semibold mb-2">
                   Phone
                 </h2>
-                <p>+03 83738 38383</p>
-                <p>+03 83738 38383</p>
+                <p>Primary: +1 (214) 307-2930</p>
+                <p>Secondary: +1 (210) 201-5745</p>
               </div>
 
               {/* Address */}
@@ -42,7 +42,7 @@ export default function ContactInfo() {
                 <h2 className="text-xl sm:text-2xl font-semibold mb-2">
                   Address
                 </h2>
-                <p>Office: 30 N Gould St, Ste 100 Sheridan, WY 82801 USA</p>
+                <p>Office: 30 N Gould St, Ste 100 Sheridan,</p>
                 <p> WY 82801 USA</p>
               </div>
 

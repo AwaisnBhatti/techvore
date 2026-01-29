@@ -22,7 +22,7 @@ export default function Navbar() {
         { label: "Cloud", path: "/services/cloud" },
       ],
     },
-    { name: "Careers", path: "/", dropdown: false },
+    { name: "Trucking", path: "/trucking", dropdown: false },
   ];
 
   useEffect(() => {

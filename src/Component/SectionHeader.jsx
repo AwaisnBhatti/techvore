@@ -14,7 +14,7 @@ const SectionHeader = ({
           {subtitle}
         </p>
 
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-black leading-tight">
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-black leading-tight whitespace-nowrap">
           {titleMain}
           <span className="inline-block bg-brand-blue rounded-xl py-0">
             {titleHighlight}
