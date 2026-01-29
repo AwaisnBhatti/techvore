@@ -2,8 +2,15 @@ import React from "react";
 import sme from "../assets/sme.png";
 import startup from "../assets/startup.png";
 import agencies from "../assets/agencies.png";
+import { useNavigate } from "react-router-dom";
 
 export default function ClientsSection() {
+  const navigate = useNavigate();
+
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
+
   return (
     <section className="pb-12 sm:pb-12 lg:pb-22">
       <div className="max-w-6xl mx-auto">
@@ -31,7 +38,10 @@ export default function ClientsSection() {
             </p>
 
             <div className="flex justify-center md:justify-start gap-4">
-              <button className="bg-gray-200 text-black px-6 py-3 font-semibold hover:bg-gray-300 transition-all">
+              <button
+                onClick={() => handleNavigation("/services")}
+                className="bg-gray-200 text-black px-6 py-3 font-semibold hover:bg-gray-300 transition-all"
+              >
                 ENTERPRISE SOLUTIONS
               </button>
             </div>
@@ -62,7 +72,10 @@ export default function ClientsSection() {
             </p>
 
             <div className="flex justify-center md:justify-start gap-4">
-              <button className="bg-gray-200 text-black px-6 py-3 font-semibold hover:bg-gray-300 transition-all">
+              <button
+                onClick={() => handleNavigation("/services")}
+                className="bg-gray-200 text-black px-6 py-3 font-semibold hover:bg-gray-300 transition-all"
+              >
                 SCALE WITH US
               </button>
             </div>
@@ -93,7 +106,10 @@ export default function ClientsSection() {
             </p>
 
             <div className="flex justify-center md:justify-start gap-4">
-              <button className="bg-gray-200 text-black px-6 py-3 font-semibold hover:bg-gray-300 transition-all">
+              <button
+                onClick={() => handleNavigation("/trucking")}
+                className="bg-gray-200 text-black px-6 py-3 font-semibold hover:bg-gray-300 transition-all"
+              >
                 VIEW LOGISTICS TECH
               </button>
             </div>
