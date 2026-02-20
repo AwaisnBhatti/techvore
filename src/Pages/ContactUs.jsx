@@ -1,10 +1,10 @@
 import React from "react";
 import Map from "../Component/Map";
 import { ChevronDown } from "lucide-react";
-import phone from "../assets/phone.png";
-import map from "../assets/map.png";
-import email from "../assets/email.png";
-import megaphone from "../assets/megaphone.png";
+import phone from "../assets/phone.webp";
+import map from "../assets/map.webp";
+import email from "../assets/email.webp";
+import megaphone from "../assets/megaphone.webp";
 import Container from "../Component/Container";
 
 export default function ContactInfo() {

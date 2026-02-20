@@ -2,8 +2,8 @@ import React from "react";
 import Counter from "../Component/Counter";
 import Container from "../Component/Container";
 import { ChevronRight, Video } from "lucide-react";
-import about1 from "../assets/about1.png";
-import about2 from "../assets/about2.png";
+import about1 from "../assets/about1.webp";
+import about2 from "../assets/about2.webp";
 import HeroWithImage from "../Component/HeroWithImage";
 import { Link } from "react-router-dom";
 

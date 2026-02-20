@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.webp";
 
 export default function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);

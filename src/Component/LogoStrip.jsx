@@ -4,27 +4,27 @@ import React from "react";
 const PARTNER_LOGOS = [
   {
     name: "loveholidays",
-    src: "/logos/loveholidays.png",
+    src: "/logos/loveholidays.webp",
     height: "1.25rem",
     width: "auto",
   },
-  { name: "voi", src: "/logos/voi.png", height: "1.5rem", width: "auto" },
+  { name: "voi", src: "/logos/voi.webp", height: "1.5rem", width: "auto" },
   {
     name: "Printify",
-    src: "/logos/printify.png",
+    src: "/logos/printify.webp",
     height: "3rem",
     width: "auto",
   },
   {
     name: "NEW LOOK",
-    src: "/logos/newlook.png",
+    src: "/logos/newlook.webp",
     height: "4rem",
     width: "auto",
   },
-  { name: "veeps", src: "/logos/veeps.png", height: "2rem", width: "auto" },
+  { name: "veeps", src: "/logos/veeps.webp", height: "2rem", width: "auto" },
   {
     name: "LA MARTINA",
-    src: "/logos/lamartina.png",
+    src: "/logos/lamartina.webp",
     height: "8rem",
     width: "auto",
   },

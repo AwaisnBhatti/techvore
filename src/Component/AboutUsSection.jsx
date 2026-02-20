@@ -1,5 +1,5 @@
 import React from "react";
-import aboutUsBgImage from "../assets/AboutUs.png";
+import aboutUsBgImage from "../assets/AboutUs.webp";
 import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 

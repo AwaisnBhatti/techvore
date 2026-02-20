@@ -8,7 +8,7 @@ const WorkTogetherSection = () => {
     <div
       className="text-white pt-32 pb-16 px-4 sm:px-6 md:px-10 lg:px-20 flex flex-col justify-center items-center text-center"
       style={{
-        backgroundImage: 'url("/images/work.png")',
+        backgroundImage: 'url("/images/work.webp")',
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}

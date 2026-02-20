@@ -1,7 +1,7 @@
 import React from "react";
-import sme from "../assets/sme.png";
-import startup from "../assets/startup.png";
-import agencies from "../assets/agencies.png";
+import sme from "../assets/sme.webp";
+import startup from "../assets/startup.webp";
+import agencies from "../assets/agencies.webp";
 import { useNavigate } from "react-router-dom";
 
 export default function ClientsSection() {

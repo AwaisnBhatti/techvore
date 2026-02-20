@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ChevronRight } from "lucide-react";
-import faqArrow from "../assets/faqArrow.png";
+import faqArrow from "../assets/faqArrow.webp";
 
 export default function SupportForm() {
   const [openIndex, setOpenIndex] = useState(0);

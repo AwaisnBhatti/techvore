@@ -1,13 +1,13 @@
 import React from "react";
 import HeroWithImage from "../Component/HeroWithImage";
-import services1 from "../assets/services1.png";
+import services1 from "../assets/services1.webp";
 import Container from "../Component/Container";
 import ServicesCards from "../Component/ServicesCards";
 import Engagement from "../Component/Engagement";
 import SectionHeader from "../Component/SectionHeader";
 import BrandButton from "../Component/Button";
 import { useNavigate } from "react-router-dom";
-import ourStrength from "../assets/ourStrength.jpg";
+import ourStrength from "../assets/ourStrength.webp";
 
 const models = [
   {

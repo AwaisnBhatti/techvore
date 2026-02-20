@@ -1,7 +1,7 @@
 import React from "react";
 import { MapPin, Mail, Phone } from "lucide-react";
 import { FaFacebookF, FaLinkedinIn, FaInstagram } from "react-icons/fa";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.webp";
 
 const Footer = () => {
   return (
@@ -53,9 +53,7 @@ const Footer = () => {
                 rel="noopener noreferrer"
                 className="hover:text-white transition"
               >
-                Office: 30 N Gould St, Ste 100 Sheridan,
-                <br />
-                WY 82801 USA
+                Office: 30 N Gould St, Ste 100 Sheridan, WY 82801 USA
               </a>
             </div>
 

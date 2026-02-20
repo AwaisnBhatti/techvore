@@ -1,6 +1,6 @@
 import React from "react";
 import { Check } from "lucide-react";
-import truckingCard from "../assets/trucking2.jpg";
+import truckingCard from "../assets/trucking2.webp";
 
 const TruckingCard = () => {
   const features = [

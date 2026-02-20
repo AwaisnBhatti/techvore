@@ -1,16 +1,16 @@
 import React from "react";
 import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import material from "../assets/material.png";
-import python from "../assets/python.png";
-import figma from "../assets/figma.png";
-import flutter from "../assets/flutter.png";
-import fox from "../assets/fox.png";
-import github from "../assets/github.png";
-import next from "../assets/next.png";
-import react from "../assets/react.png";
-import diamond from "../assets/diamond.png";
-import html from "../assets/html.png";
+import material from "../assets/material.webp";
+import python from "../assets/python.webp";
+import figma from "../assets/figma.webp";
+import flutter from "../assets/flutter.webp";
+import fox from "../assets/fox.webp";
+import github from "../assets/github.webp";
+import next from "../assets/next.webp";
+import react from "../assets/react.webp";
+import diamond from "../assets/diamond.webp";
+import html from "../assets/html.webp";
 
 export default function Hero() {
   const navigate = useNavigate();
