@@ -1,153 +1,127 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom"; // Essential for SPA navigation
+import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
-const ServiceCard = ({ service, isFirst }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const domRef = useRef();
+const WORDS = ["Possibilities", "Perspectives", "Innovations", "Solutions"];
+
+const SERVICES = [
+  {
+    title: "Digital Product Engineering",
+    description:
+      "We turn ideas into scalable, secure digital products that lead the market and retain users.",
+    link: "/services",
+  },
+  {
+    title: "Data Intelligence & Architecture",
+    description:
+      "Data becomes powerful when it delivers answers. We build smart databases and analytics systems.",
+    link: "/services",
+  },
+  {
+    title: "Autonomous Business Operations",
+    description:
+      "Efficiency is your real edge. With Python powered automation, we streamline your workflows.",
+    link: "/services",
+  },
+  {
+    title: "Blockchain Architecture & Web3",
+    description:
+      "We build the backbone of next gen global exchange using Web3 and Blockchain.",
+    link: "/services",
+  },
+  {
+    title: "Integrated Mobility & Supply Chain",
+    description:
+      "We merge software precision with fleet operations, using data-driven dispatching.",
+    link: "/trucking",
+  },
+];
+
+const HEADING_CLASS =
+  "block text-5xl md:text-8xl lg:text-7xl font-bold tracking-tighter leading-[1.1] text-slate-900 text-center lg:text-left";
+
+// Fades/slides each item in as it enters the viewport (and back out when it leaves).
+function ServiceCard({ title, description, link, isFirst }) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-          } else {
-            setIsVisible(false);
-          }
-        });
-      },
+      ([entry]) => setVisible(entry.isIntersecting),
       { threshold: 0.2 },
     );
-
-    const { current } = domRef;
-    if (current) observer.observe(current);
-    return () => {
-      if (current) observer.unobserve(current);
-    };
+    observer.observe(node);
+    return () => observer.disconnect();
   }, []);
 
   return (
     <div
-      ref={domRef}
-      className={`transition-all duration-1000 transform flex flex-col items-center lg:items-start ${
-        isFirst ? "border-t-0 pt-0" : "border-t border-gray-100 pt-12"
-      } ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
-      }`}
+      ref={ref}
+      className={`flex flex-col items-center lg:items-start transition-all duration-1000 motion-reduce:transition-none ${
+        isFirst ? "pt-0" : "border-t border-gray-100 pt-12"
+      } ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}`}
     >
       <h3 className="text-3xl font-semibold mb-5 text-slate-800 tracking-tight text-center lg:text-left">
-        {service.title}
+        {title}
       </h3>
       <p className="text-slate-500 text-xl leading-relaxed mb-6 max-w-md text-center lg:text-left">
-        {service.description}
+        {description}
       </p>
-
-      {/* Changed from <a> to <Link> for smooth React navigation */}
       <Link
-        to={service.link}
-        className="group text-[#0091ffff] font-bold text-sm tracking-widest flex items-center gap-2 hover:text-[#00affe] transition-colors uppercase"
+        to={link}
+        className="group flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-[#0091ff] transition-colors hover:text-[#00affe]"
       >
         Learn more
-        <span className="group-hover:translate-x-1 transition-transform duration-300">
+        <span
+          aria-hidden="true"
+          className="transition-transform duration-300 group-hover:translate-x-1"
+        >
           →
         </span>
       </Link>
     </div>
   );
-};
+}
 
-const ServicesShowcase = () => {
-  const words = ["Possibilities", "Perspectives", "Innovations", "Solutions"];
-  const [index, setIndex] = useState(0);
+export default function ServicesShowcase() {
+  const [wordIndex, setWordIndex] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % words.length);
-    }, 3000);
+    const timer = setInterval(
+      () => setWordIndex((i) => (i + 1) % WORDS.length),
+      3000,
+    );
     return () => clearInterval(timer);
-  }, [words.length]);
-
-  // Links updated from "#" to "/services"
-  const services = [
-    {
-      title: "Digital Product Engineering",
-      description:
-        "We turn ideas into scalable, secure digital products that lead the market and retain users.",
-      link: "/services",
-    },
-    {
-      title: "Data Intelligence & Architecture",
-      description:
-        "Data becomes powerful when it delivers answers. We build smart databases and analytics systems.",
-      link: "/services",
-    },
-    {
-      title: "Autonomous Business Operations",
-      description:
-        "Efficiency is your real edge. With Python powered automation, we streamline your workflows.",
-      link: "/services",
-    },
-    {
-      title: "Blockchain Architecture & Web3",
-      description:
-        "We build the backbone of next gen global exchange using Web3 and Blockchain.",
-      link: "/services",
-    },
-    {
-      title: "Integrated Mobility & Supply Chain",
-      description:
-        "We merge software precision with fleet operations, using data-driven dispatching.",
-      link: "/trucking",
-    },
-  ];
+  }, []);
 
   return (
-    <section className="py-8 sm:py-8 lg:py-12 px-6 md:px-16 lg:px-0 text-slate-900 relative">
+    <section className="py-8 lg:py-12 px-6 md:px-16 lg:px-0 text-slate-900 relative">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 items-center lg:items-start">
-        {/* Left Side: STICKY Content */}
-        <div className="lg:sticky lg:top-24 space-y-4 self-center lg:self-start flex flex-col items-center lg:items-start">
-          <h1 className="text-5xl md:text-8xl lg:text-7xl font-bold tracking-tighter leading-[1.1] text-slate-900 text-center lg:text-left">
+        {/* Sticky left side. One heading instead of two <h1>s (the home page already has one). */}
+        <h2 className="lg:sticky lg:top-24 self-center lg:self-start flex flex-col items-center lg:items-start gap-4">
+          <span className={HEADING_CLASS}>
             Rede
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00affe] via-[#0091ffff] to-slate-900">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00affe] via-[#0091ff] to-slate-900">
               fining
             </span>
-          </h1>
+          </span>
+          <span
+            key={WORDS[wordIndex]}
+            aria-hidden="true"
+            className={`${HEADING_CLASS} animate-text-slide text-transparent bg-clip-text bg-gradient-to-r from-[#0091ff] via-[#00affe] to-slate-900`}
+          >
+            {WORDS[wordIndex]}
+          </span>
+          <span className="sr-only">Possibilities</span>
+        </h2>
 
-          <h1 className="text-5xl md:text-8xl lg:text-7xl font-bold tracking-tighter leading-[1.1] text-slate-900 text-center lg:text-left">
-            <span
-              key={words[index]}
-              className="inline-block animate-text-slide text-transparent bg-clip-text bg-gradient-to-r from-[#0091ffff] via-[#00affe] to-slate-900"
-            >
-              {words[index]}
-            </span>
-          </h1>
-        </div>
-
-        {/* Right Side: Animated scrolling list */}
         <div className="lg:pl-12 space-y-10">
-          {services.map((service, idx) => (
-            <ServiceCard key={idx} service={service} isFirst={idx === 0} />
+          {SERVICES.map((service, i) => (
+            <ServiceCard key={service.title} {...service} isFirst={i === 0} />
           ))}
         </div>
       </div>
-
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-          @keyframes textSlide {
-            0% { opacity: 0; transform: translateY(20px); }
-            15% { opacity: 1; transform: translateY(0); }
-            85% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-20px); }
-          }
-          .animate-text-slide {
-            animation: textSlide 3s ease-in-out infinite;
-          }
-        `,
-        }}
-      />
     </section>
   );
-};
-
-export default ServicesShowcase;
+}

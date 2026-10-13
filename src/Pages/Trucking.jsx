@@ -1,15 +1,14 @@
-import React from "react";
+import Container from "../Component/Container";
+import Engagement from "../Component/Engagement";
 import HeroWithImage from "../Component/HeroWithImage";
+import SectionHeader from "../Component/SectionHeader";
+import TruckingAbout from "../Component/TruckingAbout";
+import TruckingCard from "../Component/TruckingCard";
+import TruckingPricing from "../Component/TruckingPricing";
 import trucking1 from "../assets/trucking1.webp";
 import trucking3 from "../assets/trucking3.webp";
 import trucking4 from "../assets/trucking4.webp";
 import trucking5 from "../assets/trucking5.webp";
-import Container from "../Component/Container";
-import Engagement from "../Component/Engagement";
-import TruckingCard from "../Component/TruckingCard";
-import TruckingAbout from "../Component/TruckingAbout";
-import TruckingPricing from "../Component/TruckingPricing";
-import SectionHeader from "../Component/SectionHeader";
 
 const models = [
   {
@@ -58,34 +57,36 @@ const models = [
   },
 ];
 
-const Trucking = () => {
+export default function Trucking() {
   return (
-    <>
-      <Container className="mb-20">
-        <HeroWithImage
-          title={
-            <>
-              Reliable Truck Dispatching <br /> For Owner-Operators and <br />{" "}
-              <span className="text-brand-blue">Small Fleets</span>
-            </>
-          }
-          description="Focus on driving-we'll handle the loads, brokers, and paperwork. Techvore helps carriers maximize profits and stay loaded every single week"
-          imageSrc={trucking1}
-          buttonText="Let's Build Together"
-          buttonLink="/contact"
-        />
-        <TruckingCard />
-        <TruckingAbout />
-        <SectionHeader
-          subtitle="Solutions & Services"
-          titleMain="Broker Setup Assi"
-          titleHighlight="stance"
-        />
-        <Engagement models={models} />
-        <TruckingPricing />
-      </Container>
-    </>
-  );
-};
+    <Container className="mb-20">
+      <HeroWithImage
+        title={
+          <>
+            Reliable Truck Dispatching <br /> For Owner-Operators and <br />{" "}
+            <span className="text-brand-blue">Small Fleets</span>
+          </>
+        }
+        description="Focus on driving, we'll handle the loads, brokers, and paperwork. Techvore helps carriers maximize profits and stay loaded every single week."
+        imageSrc={trucking1}
+        imageWidth={462}
+        imageHeight={247}
+        imageAlt="Truck dispatching illustration"
+        buttonText="Let's Build Together"
+        buttonLink="/contact"
+      />
 
-export default Trucking;
+      <TruckingCard />
+      <TruckingAbout />
+
+      <SectionHeader
+        subtitle="Solutions & Services"
+        titleMain="Broker Setup Assi"
+        titleHighlight="stance"
+      />
+
+      <Engagement models={models} />
+      <TruckingPricing />
+    </Container>
+  );
+}

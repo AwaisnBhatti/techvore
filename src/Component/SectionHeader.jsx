@@ -1,12 +1,10 @@
-import React from "react";
-
-const SectionHeader = ({
+export default function SectionHeader({
   subtitle,
   titleMain,
   titleHighlight,
   description,
   rightElement,
-}) => {
+}) {
   return (
     <div className="flex flex-col md:flex-row items-start justify-between mb-8">
       <div className="max-w-xl">
@@ -21,18 +19,16 @@ const SectionHeader = ({
           </span>
         </h2>
 
-        <p className="text-black mt-4 md:mt-5 text-sm md:text-base">
-          {description}
-        </p>
+        {description && (
+          <p className="text-black mt-4 md:mt-5 text-sm md:text-base">
+            {description}
+          </p>
+        )}
       </div>
 
       {rightElement && (
-        <div className="self-start md:self-end mt-6 md:mt-0">
-          {rightElement}
-        </div>
+        <div className="self-start md:self-end mt-6 md:mt-0">{rightElement}</div>
       )}
     </div>
   );
-};
-
-export default SectionHeader;
+}

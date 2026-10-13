@@ -1,95 +1,50 @@
-import React from "react";
-import aboutUsBgImage from "../assets/AboutUs.webp";
 import { ChevronRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import aboutUsBgImage from "../assets/AboutUs.webp";
 
-const AboutUsSection = () => {
-  const navigate = useNavigate();
+export default function AboutUsSection() {
   return (
-    <section className="w-full flex justify-center pt-8 sm:pt-2 lg:pt-8 pb-12 sm:pb-12 lg:pb-12">
+    <section className="w-full flex justify-center pt-8 sm:pt-2 lg:pt-8 pb-12">
       <div className="relative w-full">
-        {/* Background Image Card */}
+        {/* Background image card */}
         <div
-          className="
-            shadow-xl
-            h-[500px]
-            md:h-[600px]
-            lg:h-[500px]
-            rounded-lg
-            rounded-tr-[80px]
-            overflow-visible
-            block
-            bg-[position:20%_center]
-            sm:bg-[position:40%_center]
-          "
-          style={{
-            backgroundImage: `url(${aboutUsBgImage})`,
-            backgroundSize: "cover",
-          }}
+          className="shadow-xl h-[500px] md:h-[600px] lg:h-[500px] rounded-lg rounded-tr-[80px] bg-cover bg-[position:20%_center] sm:bg-[position:40%_center]"
+          style={{ backgroundImage: `url(${aboutUsBgImage})` }}
         >
-          {/* Frosted Card */}
-          <div
-            className="absolute z-40 w-[22rem] top-[25rem] md:w-[30rem] md:top-[30rem] lg:w-[29rem] lg:top-[23rem] xl:w-[36rem] xl:top-[27rem] -translate-y-1/2"
-            style={{
-              right: "0",
-              minHeight: "450px",
-            }}
-          >
-            <div
-              className="rounded-tl-[80px] rounded-bl-[80px] p-8 md:p-14 relative overflow-hidden hidden sm:block"
-              style={{
-                border: "1px solid rgba(255,255,255,0.08)",
-                backdropFilter: "blur(14px)",
-                WebkitBackdropFilter: "blur(14px)",
-              }}
-            >
-              {/* Rounded Cutout */}
-              <div
-                aria-hidden
-                style={{
-                  position: "absolute",
-                  left: -40,
-                  top: -18,
-                  width: 120,
-                  height: 120,
-                  borderRadius: "0 60px 0 0",
-                  background: "transparent",
-                  pointerEvents: "none",
-                }}
-              />
-
+          {/* Frosted card (tablet and up) */}
+          <div className="absolute right-0 z-40 min-h-[450px] w-[22rem] top-[25rem] md:w-[30rem] md:top-[30rem] lg:w-[29rem] lg:top-[23rem] xl:w-[36rem] xl:top-[27rem] -translate-y-1/2">
+            <div className="hidden sm:block relative overflow-hidden rounded-l-[80px] border border-white/[0.08] p-8 md:p-14 backdrop-blur-[14px]">
               <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 text-center">
                 Techvore Philosophy
               </h2>
-
               <p className="text-white/90 leading-relaxed text-[13px] md:text-[15px] mb-4 text-center">
                 Techvore operates at the intersection of digital ingenuity and
-                physical execution. We don't just build software, we engineer
+                physical execution. We don’t just build software, we engineer
                 the systems that move industries. By synthesizing high-tier
                 Python automation, blockchain security, and data-driven
                 logistics, we provide a unified ecosystem where complex code
-                drives real-world results. For us, innovation isn't a goal, it
+                drives real-world results. For us, innovation isn’t a goal, it
                 is the engine that powers global operations, ensuring our
                 partners stay agile in an increasingly automated world.
               </p>
             </div>
           </div>
 
-          {/* Vertical ABOUT US Label - Clickable and Hidden on Mobile */}
-          <div
-            onClick={() => navigate("/about")}
-            className="absolute bottom-24 left-[-50px] z-50 sm:pl-12 sm:pb-10 hidden sm:block cursor-pointer group"
+          {/* Vertical "About Us" label (hidden on mobile) */}
+          <Link
+            to="/about"
+            className="group absolute bottom-24 left-[-50px] z-50 hidden sm:block sm:pl-12 sm:pb-10"
           >
-            <p className="text-xl font-semibold text-[#382f68] uppercase tracking-widest flex items-center whitespace-nowrap -rotate-90 origin-bottom-left transition-colors hover:text-brand-blue">
-              <span className="text-[#382f68] mr-4 text-3xl group-hover:text-brand-blue">
+            <span className="flex items-center whitespace-nowrap -rotate-90 origin-bottom-left text-xl font-semibold uppercase tracking-widest text-[#382f68] transition-colors group-hover:text-brand-blue">
+              <span aria-hidden="true" className="mr-4 text-3xl">
                 &larr;
-              </span>{" "}
-              ABOUT US
-            </p>
-          </div>
+              </span>
+              About Us
+            </span>
+          </Link>
         </div>
 
-        {/* Mobile-only Frosted Card (Visible below 640px) */}
+        {/* Mobile card (below 640px) */}
         <div className="sm:hidden relative z-40 -mt-[150px] shadow-xl rounded-lg rounded-tr-[80px] p-6 bg-black/50 backdrop-blur-md">
           <h2 className="text-2xl font-bold text-white mb-4">
             Techvore Philosophy
@@ -105,23 +60,20 @@ const AboutUsSection = () => {
           </p>
         </div>
 
-        {/* Button below card */}
         <div className="mt-[2rem] md:mt-[5rem] lg:mt-[2rem] flex justify-center sm:justify-start">
-          <button
-            onClick={() => navigate("/about")}
-            className="bg-brand-blue hover:bg-brand-blue-dark text-white font-semibold 
-            py-3 px-4 rounded-full inline-flex items-center transition duration-300 group"
+          <Link
+            to="/about"
+            className="group inline-flex items-center rounded-full bg-brand-blue px-4 py-3 font-semibold text-white transition duration-300 hover:bg-brand-blue-dark"
           >
             Learn More About Us
             <ChevronRight
+              aria-hidden="true"
               size={16}
               className="mt-1 ml-3 transition-transform duration-300 group-hover:translate-x-2"
             />
-          </button>
+          </Link>
         </div>
       </div>
     </section>
   );
-};
-
-export default AboutUsSection;
+}

@@ -1,18 +1,13 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 import sme from "../assets/sme.webp";
 import startup from "../assets/startup.webp";
 import agencies from "../assets/agencies.webp";
-import { useNavigate } from "react-router-dom";
 
 export default function ClientsSection() {
   const navigate = useNavigate();
 
-  const handleNavigation = (path) => {
-    navigate(path);
-  };
-
   return (
-    <section className="pb-12 sm:pb-12 lg:pb-22">
+    <section className="pb-12">
       <div className="max-w-6xl mx-auto">
         <p className="text-brand-blue font-semibold text-lg mb-2">
           Our Clients
@@ -25,9 +20,10 @@ export default function ClientsSection() {
         {/* Card 1 */}
         <div className="relative mt-12 bg-black text-white rounded-tl-[80px] p-12 flex flex-col md:flex-row items-center gap-10 min-h-[450px]">
           <div
+            aria-hidden="true"
             className="absolute inset-0 md:hidden bg-center bg-no-repeat bg-contain opacity-20 pointer-events-none"
             style={{ backgroundImage: `url(${sme})` }}
-          ></div>
+          />
 
           <div className="flex-1 relative text-center md:text-left">
             <h3 className="text-4xl font-bold mb-6">Enterprises</h3>
@@ -39,7 +35,8 @@ export default function ClientsSection() {
 
             <div className="flex justify-center md:justify-start gap-4">
               <button
-                onClick={() => handleNavigation("/services")}
+                type="button"
+                onClick={() => navigate("/services")}
                 className="bg-gray-200 text-black px-6 py-3 font-semibold hover:bg-gray-300 transition-all"
               >
                 ENTERPRISE SOLUTIONS
@@ -50,8 +47,12 @@ export default function ClientsSection() {
           <div className="hidden md:flex flex-1 justify-center">
             <img
               src={sme}
-              alt="SME Illustration"
-              className="w-full max-w-md object-contain"
+              alt="Enterprise data and analytics illustration"
+              width="453"
+              height="340"
+              loading="lazy"
+              decoding="async"
+              className="w-full max-w-md h-auto object-contain"
             />
           </div>
         </div>
@@ -59,9 +60,10 @@ export default function ClientsSection() {
         {/* Card 2 */}
         <div className="relative mt-12 bg-black text-white p-12 flex flex-col md:flex-row items-center gap-10 min-h-[350px]">
           <div
+            aria-hidden="true"
             className="absolute inset-0 md:hidden bg-center bg-no-repeat bg-contain opacity-20 pointer-events-none"
             style={{ backgroundImage: `url(${startup})` }}
-          ></div>
+          />
 
           <div className="flex-1 md:flex-[2] relative text-center md:text-left">
             <h3 className="text-4xl font-bold mb-6">Startups</h3>
@@ -73,7 +75,8 @@ export default function ClientsSection() {
 
             <div className="flex justify-center md:justify-start gap-4">
               <button
-                onClick={() => handleNavigation("/services")}
+                type="button"
+                onClick={() => navigate("/services")}
                 className="bg-gray-200 text-black px-6 py-3 font-semibold hover:bg-gray-300 transition-all"
               >
                 SCALE WITH US
@@ -81,11 +84,15 @@ export default function ClientsSection() {
             </div>
           </div>
 
-          <div className="hidden md:flex flex-1 justify-center max-h-72 overflow-hidden">
+          <div className="hidden md:flex flex-1 justify-center">
             <img
               src={startup}
-              alt="Startup Illustration"
-              className="w-auto max-w-md object-contain"
+              alt="Startup growth illustration"
+              width="340"
+              height="340"
+              loading="lazy"
+              decoding="async"
+              className="max-h-72 w-auto object-contain"
             />
           </div>
         </div>
@@ -93,9 +100,10 @@ export default function ClientsSection() {
         {/* Card 3 */}
         <div className="relative mt-12 bg-black text-white p-12 flex flex-col md:flex-row rounded-br-[80px] items-center gap-10 min-h-[350px]">
           <div
+            aria-hidden="true"
             className="absolute inset-0 md:hidden bg-center bg-no-repeat bg-contain opacity-20 pointer-events-none"
             style={{ backgroundImage: `url(${agencies})` }}
-          ></div>
+          />
 
           <div className="flex-1 md:flex-[2] relative text-center md:text-left">
             <h3 className="text-4xl font-bold mb-6">Logistics & Agencies</h3>
@@ -107,7 +115,8 @@ export default function ClientsSection() {
 
             <div className="flex justify-center md:justify-start gap-4">
               <button
-                onClick={() => handleNavigation("/trucking")}
+                type="button"
+                onClick={() => navigate("/trucking")}
                 className="bg-gray-200 text-black px-6 py-3 font-semibold hover:bg-gray-300 transition-all"
               >
                 VIEW LOGISTICS TECH
@@ -115,11 +124,15 @@ export default function ClientsSection() {
             </div>
           </div>
 
-          <div className="hidden md:flex flex-1 justify-center max-h-72 overflow-hidden">
+          <div className="hidden md:flex flex-1 justify-center">
             <img
               src={agencies}
-              alt="Agencies Illustration"
-              className="h-50 w-auto object-cover"
+              alt="Logistics and agencies illustration"
+              width="294"
+              height="340"
+              loading="lazy"
+              decoding="async"
+              className="w-auto object-contain"
             />
           </div>
         </div>

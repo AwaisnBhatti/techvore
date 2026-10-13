@@ -1,233 +1,121 @@
-import React, { useState, useRef, useEffect } from "react";
-import { ChevronDown, ChevronRight, Menu, X } from "lucide-react";
-import { useNavigate, Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { ChevronRight, Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.webp";
 
+const NAV_LINKS = [
+  { name: "Home", path: "/" },
+  { name: "About Us", path: "/about" },
+  { name: "Services", path: "/services" },
+  { name: "Trucking", path: "/trucking" },
+];
+
+function CtaLink({ className = "", ...props }) {
+  return (
+    <Link
+      to="/contact"
+      className={`group items-center gap-2 rounded-full bg-brand-blue text-base font-medium text-white transition duration-300 hover:bg-brand-blue-dark ${className}`}
+      {...props}
+    >
+      Consult Our Experts
+      <ChevronRight
+        aria-hidden="true"
+        size={16}
+        className="mt-1 transition-transform duration-300 group-hover:translate-x-2"
+      />
+    </Link>
+  );
+}
+
 export default function Navbar() {
-  const [openMenu, setOpenMenu] = useState(false);
-  const [openSection, setOpenSection] = useState(null);
-  const menuRef = useRef(null);
-  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const navRef = useRef(null);
 
-  const navLinks = [
-    { name: "Home", path: "/", dropdown: false },
-    { name: "About Us", path: "/about", dropdown: false },
-    {
-      name: "Services",
-      dropdown: false,
-      path: "/services",
-      items: [
-        { label: "Web Dev", path: "/services/web-development" },
-        { label: "App Dev", path: "/services/app-development" },
-        { label: "Cloud", path: "/services/cloud" },
-      ],
-    },
-    { name: "Trucking", path: "/trucking", dropdown: false },
-  ];
-
+  // Close the mobile menu on outside click or Escape.
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setOpenMenu(false);
-        setOpenSection(null);
-      }
+    if (!open) return;
+
+    const onPointerDown = (e) => {
+      if (navRef.current && !navRef.current.contains(e.target)) setOpen(false);
     };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    const onKeyDown = (e) => e.key === "Escape" && setOpen(false);
+
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
+  const closeMenu = () => setOpen(false);
 
   return (
     <nav
-      ref={menuRef}
-      className="bg-black text-white pl-6 pr-3 py-2 rounded-2xl flex items-center justify-between shadow-lg relative z-50"
+      ref={navRef}
+      aria-label="Main"
+      className="bg-black text-white pl-6 pr-3 py-2 rounded-2xl flex items-center justify-between shadow-[0_0_0_1px_rgba(255,255,255,0.14),0_10px_30px_-10px_rgba(0,0,0,0.5)] relative z-50"
     >
-      {/* Logo */}
-      <div
-        className="flex items-center gap-2 text-white text-xl font-bold cursor-pointer"
-        onClick={() => navigate("/")}
-      >
-        <div className="w-16 h-8 rounded-sm flex items-center justify-center text-black font-bold">
-          <img src={logo} alt="techvore logo" />
-        </div>
-        <span className="text-white font-bold text-2xl">Techvore</span>
-      </div>
+      <Link to="/" className="flex items-center gap-2 text-xl font-bold">
+        <img
+          src={logo}
+          alt="Techvore logo"
+          width="326"
+          height="247"
+          className="w-16 h-auto"
+        />
+        <span className="text-2xl font-bold">Techvore</span>
+      </Link>
 
-      {/* Desktop Menu */}
+      {/* Desktop menu */}
       <ul className="hidden lg:flex items-center lg:gap-6 xl:gap-10 text-base font-medium">
-        {navLinks.map((link) => (
-          <li key={link.name} className="relative group">
-            {!link.dropdown ? (
-              <Link
-                to={link.path}
-                className="hover:text-blue-400 transition"
-                onClick={() => setOpenSection(null)}
-              >
-                {link.name}
-              </Link>
-            ) : (
-              <>
-                <button
-                  className={`flex items-center gap-1 cursor-pointer transition ${
-                    openSection === link.name
-                      ? "text-blue-400"
-                      : "hover:text-blue-400"
-                  }`}
-                  onClick={() =>
-                    setOpenSection(openSection === link.name ? null : link.name)
-                  }
-                >
-                  {link.name}
-                  <ChevronDown
-                    size={18}
-                    className={`transition-transform duration-300 ${
-                      openSection === link.name ? "rotate-180" : "rotate-0"
-                    }`}
-                  />
-                </button>
-
-                <div
-                  className={`absolute top-full left-0 mt-2 py-4 px-6 rounded-lg shadow-2xl z-50 min-w-[160px]
-                  transition-all duration-300 ease-out ${
-                    openSection === link.name
-                      ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
-                      : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
-                  }`}
-                  style={{
-                    backdropFilter: "blur(8px)",
-                    WebkitBackdropFilter: "blur(8px)",
-                  }}
-                >
-                  {link.items.map((item) => (
-                    <div
-                      key={item.label}
-                      className="py-2 text-black hover:text-brand-blue cursor-pointer text-sm font-semibold transition-colors"
-                      onClick={() => {
-                        navigate(item.path);
-                        setOpenSection(null);
-                      }}
-                    >
-                      {item.label}
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
+        {NAV_LINKS.map(({ name, path }) => (
+          <li key={name}>
+            <Link to={path} className="hover:text-blue-400 transition">
+              {name}
+            </Link>
           </li>
         ))}
       </ul>
 
-      {/* Desktop CTA */}
-      <button
-        onClick={() => navigate("/contact")}
-        className="hidden lg:flex bg-brand-blue hover:bg-brand-blue-dark text-white px-4 py-3 rounded-full items-center gap-2 text-base font-medium whitespace-nowrap transition duration-300 group"
-      >
-        Consult Our Experts
-        <ChevronRight
-          size={16}
-          className="mt-1 transition-transform duration-300 group-hover:translate-x-2"
-        />
-      </button>
+      <CtaLink className="hidden lg:flex px-4 py-3 whitespace-nowrap" />
 
-      {/* Mobile Menu Button */}
+      {/* Mobile menu button */}
       <button
+        type="button"
+        aria-label={open ? "Close menu" : "Open menu"}
+        aria-expanded={open}
+        aria-controls="mobile-menu"
         className={`lg:hidden relative z-[60] transition ${
-          openMenu ? "text-blue-400" : "text-white"
+          open ? "text-blue-400" : "text-white"
         }`}
-        onClick={() => setOpenMenu(!openMenu)}
+        onClick={() => setOpen((v) => !v)}
       >
-        {openMenu ? <X size={28} /> : <Menu size={28} />}
+        {open ? <X size={28} /> : <Menu size={28} />}
       </button>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu. `inert` removes hidden links from tab order and screen readers. */}
       <div
-        className={`bg-black/30 fixed text-lg inset-0 flex flex-col items-center justify-center gap-6 lg:hidden
-          transition-all duration-300 ease-out ${
-            openMenu
-              ? "opacity-100 translate-y-0 pointer-events-auto"
-              : "opacity-0 -translate-y-4 pointer-events-none"
-          }`}
-        style={{
-          zIndex: 55,
-          border: "1px solid rgba(255,255,255,0.08)",
-          backdropFilter: "blur(10px)",
-          WebkitBackdropFilter: "blur(10px)",
-        }}
+        id="mobile-menu"
+        inert={!open}
+        className={`bg-black/30 fixed inset-0 z-[55] flex flex-col items-center justify-center gap-6 border border-white/[0.08] text-lg backdrop-blur-[10px] transition-all duration-300 ease-out lg:hidden ${
+          open
+            ? "opacity-100 translate-y-0 pointer-events-auto"
+            : "opacity-0 -translate-y-4 pointer-events-none"
+        }`}
       >
-        {navLinks.map((link) => (
-          <div
-            key={link.name}
-            className="relative w-full flex flex-col items-center"
+        {NAV_LINKS.map(({ name, path }) => (
+          <Link
+            key={name}
+            to={path}
+            onClick={closeMenu}
+            className="w-full py-2 text-center text-xl font-[410] text-white hover:text-blue-400"
           >
-            {!link.dropdown ? (
-              <Link
-                to={link.path}
-                className="text-white text-xl font-[410] hover:text-blue-400 w-full text-center py-2"
-                onClick={() => setOpenMenu(false)}
-              >
-                {link.name}
-              </Link>
-            ) : (
-              <>
-                <button
-                  className={`flex items-center gap-1 text-black cursor-pointer w-full justify-center ml-4 ${
-                    openSection === link.name
-                      ? "text-blue-400"
-                      : "hover:text-blue-400"
-                  }`}
-                  onClick={() =>
-                    setOpenSection(openSection === link.name ? null : link.name)
-                  }
-                >
-                  {link.name}
-                  <ChevronDown
-                    size={18}
-                    className={`transition-transform duration-300 ${
-                      openSection === link.name ? "rotate-180" : "rotate-0"
-                    }`}
-                  />
-                </button>
-
-                {openSection === link.name && (
-                  <div
-                    className="flex flex-col w-full mt-2 text-black py-2 rounded-lg"
-                    style={{
-                      backdropFilter: "blur(8px)",
-                      WebkitBackdropFilter: "blur(8px)",
-                    }}
-                  >
-                    {link.items.map((item) => (
-                      <div
-                        key={item.label}
-                        className="py-2 hover:text-brand-blue cursor-pointer text-sm font-medium text-center"
-                        onClick={() => {
-                          navigate(item.path);
-                          setOpenMenu(false);
-                          setOpenSection(null);
-                        }}
-                      >
-                        {item.label}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </>
-            )}
-          </div>
+            {name}
+          </Link>
         ))}
 
-        <button
-          onClick={() => {
-            navigate("/contact");
-            setOpenMenu(false);
-          }}
-          className="bg-brand-blue hover:bg-brand-blue-dark text-white px-6 py-3 rounded-full flex items-center gap-2 text-base font-medium transition duration-300 group"
-        >
-          Consult Our Experts
-          <ChevronRight
-            size={16}
-            className="mt-1 transition-transform duration-300 group-hover:translate-x-2"
-          />
-        </button>
+        <CtaLink onClick={closeMenu} className="flex px-6 py-3" />
       </div>
     </nav>
   );

@@ -1,144 +1,100 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-// Define the data for the counter section
-const counters = [
+const COUNTERS = [
   {
-    value: "18+",
+    shape: "circle",
+    number: 18,
     labelBold: "Digital Solutions Delivered",
     labelNormal: "and counting more.",
-    shape: "circle",
-    shapeClass: "fill-brand-blue",
-    number: 18,
   },
   {
-    value: "5+",
+    shape: "diamond",
+    number: 5,
     labelBold: "Industries Served",
     labelNormal: " (Logistics, Fintech, Retail)",
-    shape: "diamond",
-    shapeClass: "fill-brand-blue",
-    number: 5,
   },
   {
-    value: "8+",
+    shape: "triangle",
+    number: 8,
     labelBold: "Satisfied Clients",
     labelNormal: "and counting more.",
-    shape: "triangle",
-    shapeClass: "fill-brand-blue",
-    number: 8,
   },
 ];
 
-// Counter animation hook
-const useCountOnView = (endValue, duration = 1200) => {
+const SHAPES = {
+  circle: { offset: "translate(-80px, 60px)", el: <circle cx="50" cy="50" r="50" /> },
+  diamond: { offset: "translate(-55px, 55px)", el: <polygon points="50,0 100,50 50,100 0,50" /> },
+  triangle: { offset: "translate(-20px, 70px)", el: <polygon points="10,10 90,50 10,90" /> },
+};
+
+// Counts up from 0 to `end` once the element is at least half visible.
+function useCountOnView(end, duration = 1200) {
+  const ref = useRef(null);
+  const [started, setStarted] = useState(false);
   const [count, setCount] = useState(0);
-  const [start, setStart] = useState(false);
-  const ref = useRef();
 
   useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setStart(true);
+          setStarted(true);
           observer.disconnect();
         }
       },
       { threshold: 0.5 },
     );
-
-    if (ref.current) observer.observe(ref.current);
-
+    observer.observe(node);
     return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
-    if (!start) return;
-    let current = 0;
-    const increment = endValue / (duration / 16.6);
+    if (!started) return;
+    const startTime = performance.now();
+    let frame;
 
-    const animate = () => {
-      current += increment;
-      if (current < endValue) {
-        setCount(Math.floor(current));
-        requestAnimationFrame(animate);
-      } else {
-        setCount(endValue);
-      }
+    const tick = (now) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      setCount(Math.floor(progress * end));
+      if (progress < 1) frame = requestAnimationFrame(tick);
     };
+    frame = requestAnimationFrame(tick);
 
-    requestAnimationFrame(animate);
-  }, [start, endValue, duration]);
+    return () => cancelAnimationFrame(frame);
+  }, [started, end, duration]);
 
   return [count, ref];
-};
+}
 
-// CounterShape Component
-const CounterShape = ({
-  shape,
-  labelBold,
-  labelNormal,
-  shapeClass,
-  number,
-}) => {
-  const [animatedNumber, ref] = useCountOnView(number);
-
-  const shapeSize = "w-28 h-28 sm:w-36 sm:h-36";
-
-  let shapeContent;
-  switch (shape) {
-    case "diamond":
-      shapeContent = (
-        <svg className={shapeSize} viewBox="0 0 100 100">
-          <polygon points="50,0 100,50 50,100 0,50" className={shapeClass} />
-        </svg>
-      );
-      break;
-    case "triangle":
-      shapeContent = (
-        <svg className={shapeSize} viewBox="0 0 100 100">
-          <polygon points="10,10 90,50 10,90" className={shapeClass} />
-        </svg>
-      );
-      break;
-    case "circle":
-    default:
-      shapeContent = (
-        <svg className={shapeSize} viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="50" className={shapeClass} />
-        </svg>
-      );
-  }
-
-  const containerHeightClass = "h-20 sm:h-24";
+function CounterItem({ shape, number, labelBold, labelNormal }) {
+  const [count, ref] = useCountOnView(number);
+  const { offset, el } = SHAPES[shape];
 
   return (
     <div
       ref={ref}
-      className="flex flex-col items-center text-center w-full sm:w-1/2 md:w-1/3 lg:w-1/3"
+      className="flex flex-col items-center text-center w-full sm:w-1/2 md:w-1/3"
     >
-      <div
-        className={`relative flex items-center justify-center ${containerHeightClass} mb-4`}
-      >
+      <div className="relative flex items-center justify-center h-20 sm:h-24 mb-4">
         <div
+          aria-hidden="true"
           className="absolute z-10 opacity-90"
-          style={{
-            transform: "translate(0px, 0px)",
-            ...(shape === "circle" && { transform: "translate(-80px, 60px)" }),
-            ...(shape === "diamond" && { transform: "translate(-55px,55px)" }),
-            ...(shape === "triangle" && {
-              transform: "translate(-20px, 70px)",
-            }),
-          }}
+          style={{ transform: offset }}
         >
-          {shapeContent}
+          <svg
+            viewBox="0 0 100 100"
+            className="w-28 h-28 sm:w-36 sm:h-36 fill-brand-blue"
+          >
+            {el}
+          </svg>
         </div>
       </div>
 
-      {/* Animated number */}
-      <p className="text-6xl sm:text-7xl font-extrabold text-black/90 mt-[-10px] sm:mt-0 z-20">
-        {animatedNumber}+
+      <p className="text-6xl sm:text-7xl font-extrabold text-black/90 -mt-2.5 sm:mt-0 z-20">
+        {count}+
       </p>
 
-      {/* Label */}
       <p className="text-left text-lg text-gray-700 mt-5 max-w-[250px] font-medium leading-snug">
         <span className="font-bold">{labelBold}</span>
         <br />
@@ -146,21 +102,16 @@ const CounterShape = ({
       </p>
     </div>
   );
-};
+}
 
-// Main CounterSection
-const CounterSection = () => {
+export default function Counter() {
   return (
-    <section>
-      <div className="max-w-7xl mx-auto mb-20">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-12 md:gap-6 lg:gap-12 md:pl-20">
-          {counters.map((counter, index) => (
-            <CounterShape key={index} {...counter} />
-          ))}
-        </div>
+    <section className="max-w-7xl mx-auto mb-20">
+      <div className="flex flex-col md:flex-row justify-between items-center gap-12 md:gap-6 lg:gap-12 md:pl-20">
+        {COUNTERS.map((counter) => (
+          <CounterItem key={counter.shape} {...counter} />
+        ))}
       </div>
     </section>
   );
-};
-
-export default CounterSection;
+}
