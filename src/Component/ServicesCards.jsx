@@ -132,7 +132,7 @@ export default function ServicesCards() {
           />
         </button>
 
-        <div className="px-2">
+        <div className="px-2 equal-slides">
           <Slider
             key={slidesToShow}
             ref={sliderRef}
@@ -141,9 +141,9 @@ export default function ServicesCards() {
           >
             {SERVICES.map(
               ({ id, title, subtitle, description, features, isDark }) => (
-                <div key={id} className="px-3 py-4">
+                <div key={id} className="px-3 py-4 h-full">
                   <div
-                    className={`relative flex flex-col min-h-[400px] p-6 rounded-[40px] shadow-xl transition-transform hover:scale-[1.02] ${
+                    className={`relative flex flex-col h-full min-h-[400px] p-6 rounded-[40px] shadow-xl transition-transform hover:scale-[1.02] ${
                       isDark ? "bg-black text-white" : "bg-white text-gray-900"
                     }`}
                   >

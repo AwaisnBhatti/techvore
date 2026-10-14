@@ -11,6 +11,17 @@ body {
   background: radial-gradient(circle at center, #cde4f0, #e8edf0) fixed;
 }
 
+.equal-slides .slick-track {
+  display: flex;
+}
+.equal-slides .slick-slide {
+  height: auto;
+}
+.equal-slides .slick-slide > div,
+.equal-slides .slick-slide > div > div {
+  height: 100%;
+}
+
 @keyframes float {
   0%,
   100% {
